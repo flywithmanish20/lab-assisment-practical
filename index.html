@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Premium Theme App</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  transition: 0.4s;
+}
+
+/* App Layout */
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Light Mode */
+.light {
+  background: linear-gradient(135deg, #e0f2fe, #f8fafc);
+  color: #020617;
+}
+
+/* Dark Mode */
+.dark {
+  background: linear-gradient(135deg, #020617, #0f172a);
+  color: #e2e8f0;
+}
+
+/* Card UI */
+.card {
+  padding: 25px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  width: 60px;
+  height: 30px;
+  margin-top: 20px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  background: #ccc;
+  border-radius: 30px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0.4s;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 24px;
+  width: 24px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background: #3b82f6;
+}
+
+input:checked + .slider:before {
+  transform: translateX(30px);
+}
+
+/* Text */
+h1 {
+  margin-bottom: 10px;
+}
+
+p {
+  margin: 10px 0;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="app" class="app">
+  <div class="card">
+    <h1>📱 Theme App</h1>
+    <p id="status">Loading...</p>
+
+    <!-- Toggle Switch -->
+    <label class="switch">
+      <input type="checkbox" id="toggle" onchange="toggleTheme()">
+      <span class="slider"></span>
+    </label>
+  </div>
+</div>
+
+<script>
+let dark = localStorage.getItem("theme") === "dark";
+
+const app = document.getElementById("app");
+const status = document.getElementById("status");
+const toggle = document.getElementById("toggle");
+
+function applyTheme() {
+  if (dark) {
+    app.classList.add("dark");
+    app.classList.remove("light");
+    status.innerText = "🌙 Dark Mode Enabled";
+    toggle.checked = true;
+  } else {
+    app.classList.add("light");
+    app.classList.remove("dark");
+    status.innerText = "☀️ Light Mode Enabled";
+    toggle.checked = false;
+  }
+}
+
+function toggleTheme() {
+  dark = !dark;
+  localStorage.setItem("theme", dark ? "dark" : "light");
+  applyTheme();
+}
+
+/* Load saved theme */
+applyTheme();
+</script>
+
+</body>
+</html>
